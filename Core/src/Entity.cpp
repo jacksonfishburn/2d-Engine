@@ -15,7 +15,6 @@ void Entity::setTransform(
 		rotation = newRotation;
 		scale = newScale;
 	}
-	
 }
 
 void Entity::setSprite(sf::Texture texture)
@@ -28,12 +27,12 @@ void Entity::setSprite(sf::Texture texture)
 void Entity::setSpriteFromSheet(const sf::Texture& texture, const sf::Vector2f& gridDimension, const sf::Vector2f& tile)
 {
 	sprite.setTexture(texture);
-	sprite.setScale(scale, scale);
-	sprite.setPosition(position);
 
 	sf::Vector2f tileSize{ texture.getSize().x / gridDimension.x, texture.getSize().y / gridDimension.y };
-
 	sprite.setTextureRect(sf::IntRect(tile.x * tileSize.x, tile.y * tileSize.y, tileSize.x, tileSize.y));
+
+	sprite.setScale(scale, scale);
+	sprite.setPosition(position);
 }
 
 
