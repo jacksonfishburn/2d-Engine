@@ -1,8 +1,18 @@
 #include "Game.h"
 
-Game::Game() 
+void Game::initGame()
 {
-	
+
+}
+
+void Game::update()
+{
+
+}
+
+void Game::render()
+{
+
 }
 
 void Game::run()

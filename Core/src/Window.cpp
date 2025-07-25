@@ -55,7 +55,7 @@ void Window::setSize(const sf::Vector2u& newSize)
 	create();
 }
 
-void Window::resize(sf::Event& event)
+void Window::resize(const sf::Event& event)
 {
 	if (event.type == sf::Event::Resized)
 	{

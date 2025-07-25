@@ -1,20 +1,44 @@
-#include "SFML/Graphics.hpp"
+#pragma once
+
+#include <unordered_map>
+#include <typeindex>
+#include <cassert>
+
+#include "Transform.h"
+#include "Sprite.h"
+
+
 
 class Entity
 {
 public:
 
-	void setTransform(sf::Vector2f position, float rotation, float scale);
-	void setSprite(sf::Texture texture);
-	void setSpriteFromSheet(const sf::Texture& texture, const sf::Vector2f& gridDimension, const sf::Vector2f& tile);
+	template<typename T>
+	void addComponent(T* component)
+	{
+		assert(component != nullptr && "Component pointer must not be null");
+		assert(components.find(typeid(T)) == components.end() && "Component of this type already exists");
 
-	sf::Vector2f getPosition();
-	float getRotation();
-	float getScale();
+		components[typeid(T)] = std::unique_ptr<Component>(component);
+	}
+
+
+	template<typename T>
+	T* getComponent()
+	{
+		// iterates though map to find key which == typeid(T)
+		auto it = components.find(typeid(T));
+
+		assert(it != components.end() && "Entity has no Component of this type");
+
+		return static_cast<T*>(it->second.get());
+	}
+
 
 private:
-	sf::Vector2f position;
-	sf::Sprite sprite;
-	float rotation;
-	float scale;
+
+	std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
+
 };
+
+

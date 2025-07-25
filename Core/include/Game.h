@@ -5,8 +5,10 @@
 class Game
 {
 public:
-	Game();
 
+	void initGame();
+	void update();
+	void render();
 	void run();
 	void cleanup();
 
