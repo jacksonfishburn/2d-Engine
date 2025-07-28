@@ -4,9 +4,8 @@
 #include <typeindex>
 #include <cassert>
 
-#include "Transform.h"
-#include "Sprite.h"
-
+#include "components/Transform.h"
+#include "components/Sprite.h"
 
 
 class Entity
@@ -19,6 +18,9 @@ public:
 		assert(component != nullptr && "Component pointer must not be null");
 		assert(components.find(typeid(T)) == components.end() && "Component of this type already exists");
 
+		// Key: type id
+		// Value: Pointer of type Component which really points to a derived Component but doesn't know it
+		// Polymorphism 
 		components[typeid(T)] = std::unique_ptr<Component>(component);
 	}
 
@@ -26,12 +28,13 @@ public:
 	template<typename T>
 	T* getComponent()
 	{
-		// iterates though map to find key which == typeid(T)
-		auto it = components.find(typeid(T));
+		// returns iterator of the pair with key typeid T
+		auto comp = components.find(typeid(T));
 
-		assert(it != components.end() && "Entity has no Component of this type");
+		assert(comp != components.end() && "Entity has no Component of this type");
 
-		return static_cast<T*>(it->second.get());
+		// gets the raw pointer of value and casts it as the type we want
+		return static_cast<T*>(comp->second.get());
 	}
 
 
@@ -40,5 +43,3 @@ private:
 	std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
 
 };
-
-

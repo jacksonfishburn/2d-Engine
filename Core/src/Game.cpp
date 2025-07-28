@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 void Game::initGame()
 {
@@ -17,10 +18,20 @@ void Game::render()
 
 void Game::run()
 {
-	sf::CircleShape circle;
-	circle.setFillColor(sf::Color::Blue);
-	circle.setPosition({ 100, 100 });
-	circle.setRadius(100);
+	Entity snake;
+
+	Transform t;
+	t.position = { 100,100 };
+	t.rotation = 0;
+	t.scale = { 1,1 };
+
+	std::cout << RESOURCES_PATH << "snake.png\n";
+
+	Sprite s;
+	s.setSprite(RESOURCES_PATH "snake.png");
+
+
+	Renderer r;
 
 	sf::RenderWindow& win = window.getWindow();
 
@@ -34,9 +45,7 @@ void Game::run()
 			window.resize(event);
 		}
 
-		win.clear();
-		win.draw(circle);
-		win.display();
+		r.renderEntity(window, snake);
 	}
 }
 

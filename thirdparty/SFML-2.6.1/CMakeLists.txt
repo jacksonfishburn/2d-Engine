@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.7.2)
 
+cmake_policy(SET CMP0069 NEW)
+
+
 # customize the compiler options CMake uses to initialize variables with
 set(CMAKE_USER_MAKE_RULES_OVERRIDE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/CompilerOptionsOverride.cmake")
 
