@@ -6,33 +6,24 @@ void Game::initGame()
 
 }
 
+
 void Game::update()
 {
+	movement.move(*entity);
+	movement.direction = { 0,0 };
 
 }
 
-void Game::render()
+
+void Game::render(sf::RenderWindow& window)
 {
-
+	Renderer r;
+	r.renderEntity(window, *entity);
 }
+
 
 void Game::run()
 {
-	Entity snake;
-
-	Transform t;
-	t.position = { 100,100 };
-	t.rotation = 0;
-	t.scale = { 1,1 };
-
-	std::cout << RESOURCES_PATH << "snake.png\n";
-
-	Sprite s;
-	s.setSprite(RESOURCES_PATH "snake.png");
-
-
-	Renderer r;
-
 	sf::RenderWindow& win = window.getWindow();
 
 	while (win.isOpen())
@@ -42,10 +33,19 @@ void Game::run()
 		{
 			if (event.type == sf::Event::Closed)
 				win.close();
-			window.resize(event);
+			if (event.type == sf::Event::Resized)
+				window.resize(event);
 		}
 
-		r.renderEntity(window, snake);
+		if (eventSys.checkForInput(sf::Keyboard::W)) movement.direction.y = -1;
+		if (eventSys.checkForInput(sf::Keyboard::S)) movement.direction.y = 1;
+		if (eventSys.checkForInput(sf::Keyboard::A)) movement.direction.x = -1;
+		if (eventSys.checkForInput(sf::Keyboard::D)) movement.direction.x = 1;
+		update();
+
+		win.clear();
+		render(win);
+
 	}
 }
 

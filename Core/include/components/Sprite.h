@@ -9,10 +9,10 @@ struct Sprite : public Component
 {
 	sf::Texture texture;
 	sf::Sprite sprite;
-	sf::Vector2f SpriteSheetSize{ 5,5 };
+	sf::Vector2f SpriteSheetSize{ 1.f,1.f };
 
 
-	void setSprite(std::string filepath)
+	void setSprite(const std::string& filepath)
 	{
 		assert(std::filesystem::exists(filepath) && "File not found");
 
@@ -21,7 +21,7 @@ struct Sprite : public Component
 	}
 
 
-	void setSpriteFromSheet(std::string filepath, int x, int y)
+	void setSpriteFromSheet(const std::string& filepath, const int& x, const int& y)
 	{
 		assert(std::filesystem::exists(filepath) && "File not found");
 

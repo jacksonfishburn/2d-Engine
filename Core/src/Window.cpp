@@ -8,6 +8,7 @@ Window::Window() :
 	view(window.getDefaultView())
 {
 	create();
+	window.setFramerateLimit(120);
 	window.setView(view);
 }
 
@@ -17,6 +18,7 @@ Window::Window(const sf::Vector2u& size, const std::string& title) :
 	view(window.getDefaultView()) 
 {
 	create();
+	window.setFramerateLimit(120);
 	window.setView(view);
 }
 
@@ -57,14 +59,11 @@ void Window::setSize(const sf::Vector2u& newSize)
 
 void Window::resize(const sf::Event& event)
 {
-	if (event.type == sf::Event::Resized)
-	{
-		size.x = event.size.width;
-		size.y = event.size.height;
-		view.setSize(size.x, size.y);
-		view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
-		window.setView(view);
-	}
+	size.x = event.size.width;
+	size.y = event.size.height;
+	view.setSize(size.x, size.y);
+	view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
+	window.setView(view);
 }
 
 

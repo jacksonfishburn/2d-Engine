@@ -1,9 +1,5 @@
-cmake_minimum_required(VERSION 3.5)
-cmake_policy(SET CMP0069 NEW)
-
+cmake_minimum_required(VERSION 3.1)
 project(glad)
-
-
 
 add_library(glad)
 target_sources(glad PRIVATE src/glad.c)

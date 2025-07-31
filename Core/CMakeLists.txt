@@ -7,7 +7,7 @@ add_library(core STATIC ${CORE_SRC} ${CORE_HEADERS})
 # Set the include path for others to find engine headers
 target_include_directories(core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_compile_definitions(RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/App/resources/")
+add_compile_definitions(RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../App/resources/")
 
 # Link SFML to the engine
 target_link_libraries(core PUBLIC 

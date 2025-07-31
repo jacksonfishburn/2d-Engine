@@ -8,6 +8,6 @@
 
 struct Renderer
 {
-	void renderEntity(Window& window, Entity& entity);
-	void renderAllEntities(Window& window, const std::vector<Entity*>& entities);
+	void renderEntity(sf::RenderWindow& window, Entity& entity);
+	void renderAllEntities(sf::RenderWindow& window, const std::vector<Entity*>& entities);
 };

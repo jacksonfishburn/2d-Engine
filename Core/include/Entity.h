@@ -19,8 +19,8 @@ public:
 		assert(components.find(typeid(T)) == components.end() && "Component of this type already exists");
 
 		// Key: type id
-		// Value: Pointer of type Component which really points to a derived Component but doesn't know it
-		// Polymorphism 
+		// Value: Pointer of type Component, which really points to a derived Component but doesn't know it
+		// Polymorphism
 		components[typeid(T)] = std::unique_ptr<Component>(component);
 	}
 
@@ -33,10 +33,9 @@ public:
 
 		assert(comp != components.end() && "Entity has no Component of this type");
 
-		// gets the raw pointer of value and casts it as the type we want
+		// gets the value as a raw pointer and casts it as the type we want
 		return static_cast<T*>(comp->second.get());
 	}
-
 
 private:
 
