@@ -4,11 +4,11 @@
 #include "Entity.h"
 #include "Renderer.h"
 
-#include "EventSys.h"
-#include "Movement.h"
+#include "MovementSys.h"
 
 #include "components/Sprite.h"
 #include "components/Transform.h"
+#include "components/Control.h"
 
 
 class Game
@@ -24,8 +24,7 @@ public:
 	Window& getGameWindow();
 
 	Entity* entity;
-	EventSys eventSys;
-	Movement movement;
+	MovementSys movement;
 
 private:
 

@@ -37,6 +37,17 @@ public:
 		return static_cast<T*>(comp->second.get());
 	}
 
+
+	template<typename T>
+	bool hasComponent()
+	{
+		auto comp = components.find(typeid(T));
+
+		if (comp != components.end()) return true;
+		return false;
+
+	}
+
 private:
 
 	std::unordered_map<std::type_index, std::unique_ptr<Component>> components;

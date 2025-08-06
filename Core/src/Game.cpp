@@ -9,9 +9,7 @@ void Game::initGame()
 
 void Game::update()
 {
-	movement.move(*entity);
-	movement.direction = { 0,0 };
-
+	movement.update(*entity);
 }
 
 
@@ -37,20 +35,18 @@ void Game::run()
 				window.resize(event);
 		}
 
-		if (eventSys.checkForInput(sf::Keyboard::W)) movement.direction.y = -1;
-		if (eventSys.checkForInput(sf::Keyboard::S)) movement.direction.y = 1;
-		if (eventSys.checkForInput(sf::Keyboard::A)) movement.direction.x = -1;
-		if (eventSys.checkForInput(sf::Keyboard::D)) movement.direction.x = 1;
 		update();
 
 		win.clear();
 		render(win);
 
 	}
+	cleanup();
 }
 
 void Game::cleanup()
 {
+	delete entity;
 }
 
 
