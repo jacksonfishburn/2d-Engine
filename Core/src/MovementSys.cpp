@@ -1,5 +1,6 @@
 #include "MovementSys.h"
 #include <iostream>
+#include <cmath>
 
 void MovementSys::move(Entity& entity)
 {

@@ -14,7 +14,7 @@ int main()
 
 
 	Sprite* s = new Sprite;
-	s->setSprite(RESOURCES_PATH "Snake.png");
+	s->setSprite(RESOURCES_PATH "snake.png");
 
 
 	Movement* m = new Movement;
@@ -26,7 +26,6 @@ int main()
 	c->downKey = sf::Keyboard::S;
 	c->leftKey = sf::Keyboard::A;
 	c->rightKey = sf::Keyboard::D;
-
 
 	game.entity->addComponent(t);
 	game.entity->addComponent(s);
