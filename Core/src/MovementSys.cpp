@@ -1,11 +1,11 @@
-#include "MovementSys.h"
+#include "systems/MovementSys.h"
 #include <iostream>
 #include <cmath>
 
-void MovementSys::move(Entity& entity)
+void MovementSys::move(std::unique_ptr<Entity>& entity)
 {
-	Transform* t = entity.getComponent<Transform>();
-	Movement* m = entity.getComponent<Movement>();
+	Transform* t = entity->getComponent<Transform>();
+	Movement* m = entity->getComponent<Movement>();
 
 	normalize(m->direction);
 
@@ -14,10 +14,10 @@ void MovementSys::move(Entity& entity)
 	m->direction = { 0,0 };
 }
 
-void MovementSys::controller(Entity& entity)
+void MovementSys::controller(std::unique_ptr<Entity>& entity)
 {
-	Control* c = entity.getComponent<Control>();
-	Movement* m = entity.getComponent<Movement>();
+	Control* c = entity->getComponent<Control>();
+	Movement* m = entity->getComponent<Movement>();
 
 	if (sf::Keyboard::isKeyPressed(c->upKey)) m->direction.y = -1;
 	if (sf::Keyboard::isKeyPressed(c->downKey)) m->direction.y = 1;
@@ -26,11 +26,14 @@ void MovementSys::controller(Entity& entity)
 }
 
 
-void MovementSys::update(Entity& entity)
+void MovementSys::update(std::vector<std::unique_ptr<Entity>>& entities)
 {
-	if (entity.hasComponent<Control>()) controller(entity);
+	for (auto& entity : entities)
+	{
+		if (entity->hasComponent<Control>()) controller(entity);
 
-	move(entity);
+		if (entity->hasComponent<Movement>()) move(entity);
+	}
 }
 
 

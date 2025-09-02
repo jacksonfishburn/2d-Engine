@@ -10,13 +10,13 @@ class MovementSys
 public:
 
 
-	void update(Entity& entity);
+	void update(std::vector<std::unique_ptr<Entity>>& entities);
 
 private:
 
-	void move(Entity& entity);
+	void move(std::unique_ptr<Entity>& entity);
 
-	void controller(Entity& entity);
+	void controller(std::unique_ptr<Entity>& entity);
 
 	void normalize(sf::Vector2f& vec);
 

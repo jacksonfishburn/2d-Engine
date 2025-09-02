@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 
+
 void Game::initGame()
 {
 
@@ -9,14 +10,20 @@ void Game::initGame()
 
 void Game::update()
 {
-	movement.update(*entity);
+	movement.update(entities);
 }
 
 
 void Game::render(sf::RenderWindow& window)
 {
 	Renderer r;
-	r.renderEntity(window, *entity);
+	r.renderAllEntities(window, entities);
+}
+
+
+void Game::cleanup()
+{
+
 }
 
 
@@ -39,16 +46,15 @@ void Game::run()
 
 		win.clear();
 		render(win);
-
 	}
 	cleanup();
 }
 
-void Game::cleanup()
-{
-	delete entity;
-}
 
+void Game::addEntity(Entity*& entity)
+{
+	entities.push_back(std::unique_ptr<Entity>(entity));
+}
 
 
 Window& Game::getGameWindow()

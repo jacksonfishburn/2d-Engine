@@ -9,5 +9,5 @@
 struct Renderer
 {
 	void renderEntity(sf::RenderWindow& window, Entity& entity);
-	void renderAllEntities(sf::RenderWindow& window, const std::vector<Entity*>& entities);
+	void renderAllEntities(sf::RenderWindow& window, const std::vector<std::unique_ptr<Entity>>& entities);
 };

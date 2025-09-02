@@ -4,22 +4,21 @@ int main()
 {
 	Game game;
 
-	game.entity = new Entity;
+#pragma region snake
 
+
+	Entity* snake = new Entity;
 
 	Transform* t = new Transform;
 	t->position = { 100,100 };
 	t->rotation = 0;
 	t->scale = { 1.f,1.f };
 
-
 	Sprite* s = new Sprite;
 	s->setSprite(RESOURCES_PATH "snake.png");
 
-
 	Movement* m = new Movement;
 	m->speed = 10;
-
 
 	Control* c = new Control;
 	c->upKey = sf::Keyboard::W;
@@ -27,16 +26,36 @@ int main()
 	c->leftKey = sf::Keyboard::A;
 	c->rightKey = sf::Keyboard::D;
 
-	game.entity->addComponent(t);
-	game.entity->addComponent(s);
-	game.entity->addComponent(m);
-	game.entity->addComponent(c);
+	snake->addComponent(t);
+	snake->addComponent(s);
+	snake->addComponent(m);
+	snake->addComponent(c);
+
+	game.addEntity(snake);
+	
+	
+#pragma endregion
+
+#pragma region planet
 
 
-	MovementSys mvmt;
+	Entity* planet = new Entity;
+
+	Transform* tp = new Transform;
+	tp->rotation = 0;
+	tp->position = { 100,100 };
+	tp->scale = { 10.f,10.f };
+
+	Sprite* sp = new Sprite;
+	sp->setSprite(RESOURCES_PATH "ShatteredMoon.png");
+
+	planet->addComponent(tp);
+	planet->addComponent(sp);
+
+	game.addEntity(planet);
 
 
-	game.movement = mvmt;
+#pragma endregion
 
 	game.run();
 }

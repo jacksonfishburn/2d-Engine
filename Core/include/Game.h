@@ -3,31 +3,33 @@
 #include "Window.h"
 #include "Entity.h"
 #include "Renderer.h"
+#include "EventManager.h"
 
-#include "MovementSys.h"
+#include "systems/MovementSys.h"
+#include "systems/InputSys.h"
 
-#include "components/Sprite.h"
-#include "components/Transform.h"
-#include "components/Control.h"
 
 
 class Game
 {
-public:
-
 	void initGame();
 	void update();
 	void render(sf::RenderWindow& window);
-	void run();
 	void cleanup();
 
+public:
+	void run();
+
+	void addEntity(Entity*& entity);
 	Window& getGameWindow();
 
-	Entity* entity;
-	MovementSys movement;
 
 private:
-
+	MovementSys movement;
 	Window window;
+	std::vector<std::unique_ptr<Entity>> entities;
+	InputSys inputs;
+	EventManager events;
+
 
 };
