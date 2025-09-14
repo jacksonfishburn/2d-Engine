@@ -16,7 +16,7 @@ private:
 
 	void move(std::unique_ptr<Entity>& entity);
 
-	void controller(std::unique_ptr<Entity>& entity);
+	// void controller(std::unique_ptr<Entity>& entity);
 
 	void normalize(sf::Vector2f& vec);
 

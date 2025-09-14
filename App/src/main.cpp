@@ -6,7 +6,6 @@ int main()
 
 #pragma region snake
 
-
 	Entity* snake = new Entity;
 
 	Transform* t = new Transform;
@@ -20,16 +19,40 @@ int main()
 	Movement* m = new Movement;
 	m->speed = 10;
 
-	Control* c = new Control;
-	c->upKey = sf::Keyboard::W;
-	c->downKey = sf::Keyboard::S;
-	c->leftKey = sf::Keyboard::A;
-	c->rightKey = sf::Keyboard::D;
+	
+	sf::Vector2f directions[] = {
+    {0, -1}, 
+    {0,  1}, 
+    {1,  0}, 
+    {-1, 0}
+	};
+
+	Event moveUp, moveDown, moveRight, moveLeft;
+
+	Event* events[] = { &moveUp, &moveDown, &moveRight, &moveLeft };
+
+	for (int i = 0; i < 4; ++i) {
+		events[i]->subscribe([snake, dir = directions[i]]() {
+			Movement* m = snake->getComponent<Movement>();
+			m->direction = dir;
+		});
+	}
+	InputSys inputSys;
+	game.inputs.addKeyPress(sf::Keyboard::W, moveUp);
+	game.inputs.addKeyPress(sf::Keyboard::S, moveDown);
+	game.inputs.addKeyPress(sf::Keyboard::D, moveRight);
+	game.inputs.addKeyPress(sf::Keyboard::A, moveLeft);
+
+	// Control* c = new Control;
+	// c->upKey = sf::Keyboard::W;
+	// c->downKey = sf::Keyboard::S;
+	// c->leftKey = sf::Keyboard::A;
+	// c->rightKey = sf::Keyboard::D;
 
 	snake->addComponent(t);
 	snake->addComponent(s);
 	snake->addComponent(m);
-	snake->addComponent(c);
+	// snake->addComponent(c);
 
 	game.addEntity(snake);
 	

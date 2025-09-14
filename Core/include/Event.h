@@ -8,13 +8,13 @@ class Event
 
 public:
 
-    void subscribe(std::function<void(Entity&)> func);
-    void emit(Entity& entity);
+    void subscribe(std::function<void()> func);
+    void emit();
 
     std::function<bool()> condition;
 
 private:
 
-    std::vector<std::function<void(Entity&)>> callbacks;
+    std::vector<std::function<void()>> callbacks;
 
 };

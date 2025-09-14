@@ -40,6 +40,7 @@ void Game::run()
 				win.close();
 			if (event.type == sf::Event::Resized)
 				window.resize(event);
+			inputs.checkFor(event);
 		}
 
 		update();
