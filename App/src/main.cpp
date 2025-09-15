@@ -19,40 +19,51 @@ int main()
 	Movement* m = new Movement;
 	m->speed = 10;
 
-	
-	sf::Vector2f directions[] = {
-    {0, -1}, 
-    {0,  1}, 
-    {1,  0}, 
-    {-1, 0}
-	};
 
 	Event moveUp, moveDown, moveRight, moveLeft;
 
-	Event* events[] = { &moveUp, &moveDown, &moveRight, &moveLeft };
+	moveUp.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.y = -1;
+	});
+	moveDown.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.y = 1;
+	});
+	moveLeft.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.x = -1;
+	});
+	moveRight.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.x = 1;
+	});
 
-	for (int i = 0; i < 4; ++i) {
-		events[i]->subscribe([snake, dir = directions[i]]() {
-			Movement* m = snake->getComponent<Movement>();
-			m->direction = dir;
-		});
-	}
-	InputSys inputSys;
+	Event stopMovingY;
+	stopMovingY.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.y = 0;
+	});
+
+	Event stopMovingX;
+	stopMovingX.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.x = 0;
+	});
+
 	game.inputs.addKeyPress(sf::Keyboard::W, moveUp);
 	game.inputs.addKeyPress(sf::Keyboard::S, moveDown);
 	game.inputs.addKeyPress(sf::Keyboard::D, moveRight);
 	game.inputs.addKeyPress(sf::Keyboard::A, moveLeft);
 
-	// Control* c = new Control;
-	// c->upKey = sf::Keyboard::W;
-	// c->downKey = sf::Keyboard::S;
-	// c->leftKey = sf::Keyboard::A;
-	// c->rightKey = sf::Keyboard::D;
+	game.inputs.addKeyRelease(sf::Keyboard::W, stopMovingY);
+	game.inputs.addKeyRelease(sf::Keyboard::S, stopMovingY);
+	game.inputs.addKeyRelease(sf::Keyboard::D, stopMovingX);
+	game.inputs.addKeyRelease(sf::Keyboard::A, stopMovingX);
 
 	snake->addComponent(t);
 	snake->addComponent(s);
 	snake->addComponent(m);
-	// snake->addComponent(c);
 
 	game.addEntity(snake);
 	

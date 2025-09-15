@@ -18,14 +18,15 @@ class Game
 	void cleanup();
 
 public:
+
 	void run();
 
 	void addEntity(Entity*& entity);
 	Window& getGameWindow();
 	InputSys inputs;
 
-
 private:
+
 	MovementSys movement;
 	Window window;
 	std::vector<std::unique_ptr<Entity>> entities;
