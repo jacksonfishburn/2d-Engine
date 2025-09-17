@@ -45,7 +45,6 @@ public:
 
 		if (comp != components.end()) return true;
 		return false;
-
 	}
 
 private:

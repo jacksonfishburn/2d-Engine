@@ -27,6 +27,9 @@ if(MSVC)
 add_compile_options(/arch:AVX2) #make sure SIMD optimizations take place
 endif()
 
+# Disable developer warnings
+set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1)
+
 project(mygame)
 
 
@@ -35,7 +38,7 @@ add_subdirectory(thirdparty/SFML-2.6.1)
 add_subdirectory(thirdparty/imgui-docking)
 add_subdirectory(thirdparty/imgui-sfml-2.6.x)
 add_subdirectory(thirdparty/glad)
-add_subdirectory(core)
+add_subdirectory(Core)
 
 
 

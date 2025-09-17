@@ -4,40 +4,114 @@ int main()
 {
 	Game game;
 
-	game.entity = new Entity;
+#pragma region snake
 
+	Entity* snake = new Entity;
 
 	Transform* t = new Transform;
 	t->position = { 100,100 };
 	t->rotation = 0;
 	t->scale = { 1.f,1.f };
 
-
 	Sprite* s = new Sprite;
-	s->setSprite(RESOURCES_PATH "Snake.png");
-
+	s->setSprite(RESOURCES_PATH "snake.png");
 
 	Movement* m = new Movement;
 	m->speed = 10;
 
 
-	Control* c = new Control;
-	c->upKey = sf::Keyboard::W;
-	c->downKey = sf::Keyboard::S;
-	c->leftKey = sf::Keyboard::A;
-	c->rightKey = sf::Keyboard::D;
+	Event moveUp, moveDown, moveRight, moveLeft;
 
 
-	game.entity->addComponent(t);
-	game.entity->addComponent(s);
-	game.entity->addComponent(m);
-	game.entity->addComponent(c);
+	moveUp.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.y -= 1;
+	});
+	moveDown.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.y += 1;
+	});
+	moveLeft.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.x -= 1;
+	});
+	moveRight.subscribe([snake]() {
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.x += 1;
+	});
+
+	moveUp.subscribe([snake](){
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) return;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) return;
+		
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.y = 0;
+	});
+
+	moveDown.subscribe([snake](){
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) return;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) return;
+		
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.y = 0;
+	});
+
+	moveLeft.subscribe([snake](){
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) return;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return;
+		
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.x = 0;
+	});
+
+	moveRight.subscribe([snake](){
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) return;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return;
+		
+		Movement* m = snake->getComponent<Movement>();
+		m->direction.x = 0;
+	});
 
 
-	MovementSys mvmt;
+	game.inputs.addKeyPress(sf::Keyboard::W, moveUp);
+	game.inputs.addKeyPress(sf::Keyboard::S, moveDown);
+	game.inputs.addKeyPress(sf::Keyboard::D, moveRight);
+	game.inputs.addKeyPress(sf::Keyboard::A, moveLeft);
+
+	game.inputs.addKeyRelease(sf::Keyboard::W, moveDown);
+	game.inputs.addKeyRelease(sf::Keyboard::S, moveUp);
+	game.inputs.addKeyRelease(sf::Keyboard::D, moveLeft);
+	game.inputs.addKeyRelease(sf::Keyboard::A, moveRight);
+
+	snake->addComponent(t);
+	snake->addComponent(s);
+	snake->addComponent(m);
+
+	game.addEntity(snake);
+	
+	
+#pragma endregion
+
+#pragma region planet
 
 
-	game.movement = mvmt;
+	Entity* planet = new Entity;
+
+	Transform* tp = new Transform;
+	tp->rotation = 0;
+	tp->position = { 100,100 };
+	tp->scale = { 10.f,10.f };
+
+	Sprite* sp = new Sprite;
+	sp->setSprite(RESOURCES_PATH "ShatteredMoon.png");
+
+	planet->addComponent(tp);
+	planet->addComponent(sp);
+
+	game.addEntity(planet);
+
+
+#pragma endregion
 
 	game.run();
 }
